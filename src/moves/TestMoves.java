@@ -237,17 +237,123 @@ public class TestMoves {
 	
 	@Test
 	public void testSouthEastMoveAbility() {
-		fail();
+		System.out.println("Testing SouthEastMoveAbility");
+
+		GameBoard board = BoardFactory.EmptyBoard();
+		UUID player1 = UUID.randomUUID();
+		Token t1 = TokenFactory.Pawn(player1);
+		
+		// start at the farthest row
+		int row = 0;
+		int col = 0;
+		board.set(row, col, t1);
+
+		System.out.println("Created board");
+		System.out.println(board);
+		
+		
+		MoveGenerator generator = new MoveGenerator();
+		// give the token the ability to move MORE than the entire length of the board
+		int diagonalLength = (int) Math.sqrt( board.getSize()*board.getSize() + board.getSize()+board.getSize() );
+		System.out.println("Expected diagonal length == "+diagonalLength);
+		
+		generator.register(t1, new SouthEastMoveAbility(diagonalLength+10));
+		List<GameBoard> moves = generator.generate(board, row, col);
+		
+		// print the results
+		moves.forEach(b -> System.out.println(b));
+		
+		System.out.println("Number of moves generated: "+moves.size());
+		assertTrue("Should contain "+(diagonalLength-1)+" moves", moves.size() == diagonalLength-1);
+		for(GameBoard b : moves) {
+			col++;
+			row++;
+			Token t = b.get(row, col);
+			assertNotNull("The token found at this location should not be null", t);
+			assertTrue("This should be our token", t==t1);
+			assertTrue("This should be our token", t.equals(t1));
+		}
+		
 	}
 	
 	@Test
 	public void testNorthWestMoveAbility() {
-		fail();
+		System.out.println("Testing NorthWestMoveAbility");
+
+		GameBoard board = BoardFactory.EmptyBoard();
+		UUID player1 = UUID.randomUUID();
+		Token t1 = TokenFactory.Pawn(player1);
+		
+		// start at the farthest row
+		int row = board.getSize()-1;
+		int col = board.getSize()-1;
+		board.set(row, col, t1);
+
+		System.out.println("Created board");
+		System.out.println(board);
+		
+		
+		MoveGenerator generator = new MoveGenerator();
+		// give the token the ability to move MORE than the entire length of the board
+		int diagonalLength = (int) Math.sqrt( board.getSize()*board.getSize() + board.getSize()+board.getSize() );
+		System.out.println("Expected diagonal length == "+diagonalLength);
+		generator.register(t1, new NorthWestMoveAbility(diagonalLength+10));
+		List<GameBoard> moves = generator.generate(board, row, col);
+		
+		// print the results
+		moves.forEach(b -> System.out.println(b));
+		
+		System.out.println("Number of moves generated: "+moves.size());
+		assertTrue("Should contain "+(diagonalLength-1)+" moves", moves.size() == diagonalLength-1);
+		for(GameBoard b : moves) {
+			col--;
+			row--;
+			Token t = b.get(row, col);
+			assertNotNull("The token found at this location should not be null", t);
+			assertTrue("This should be our token", t==t1);
+			assertTrue("This should be our token", t.equals(t1));
+		}
 	}
 	
 	@Test
 	public void testSouthWestMoveAbility() {
-		fail();
+		System.out.println("Testing SouthWestMoveAbility");
+
+		GameBoard board = BoardFactory.EmptyBoard();
+		UUID player1 = UUID.randomUUID();
+		Token t1 = TokenFactory.Pawn(player1);
+		
+		// start at the farthest row
+		int row = 0;
+		int col = board.getSize()-1;
+		board.set(row, col, t1);
+
+		System.out.println("Created board");
+		System.out.println(board);
+		
+		
+		MoveGenerator generator = new MoveGenerator();
+		// give the token the ability to move MORE than the entire length of the board
+		int diagonalLength = (int) Math.sqrt( board.getSize()*board.getSize() + board.getSize()+board.getSize() );
+		System.out.println("Expected diagonal length == "+diagonalLength);
+		
+		generator.register(t1, new SouthWestMoveAbility(diagonalLength+10));
+		List<GameBoard> moves = generator.generate(board, row, col);
+		
+		// print the results
+		moves.forEach(b -> System.out.println(b));
+		
+		System.out.println("Number of moves generated: "+moves.size());
+		assertTrue("Should contain "+(diagonalLength-1)+" moves", moves.size() == diagonalLength-1);
+		for(GameBoard b : moves) {
+			col--;
+			row++;
+			Token t = b.get(row, col);
+			assertNotNull("The token found at this location should not be null", t);
+			assertTrue("This should be our token", t==t1);
+			assertTrue("This should be our token", t.equals(t1));
+		}
+		
 	}
 	
 	@Test
@@ -267,7 +373,32 @@ public class TestMoves {
 	
 	@Test
 	public void testLShapedMoveAbility() {
-		fail();
+		System.out.println("Testing LShapedMoveAbility");
+
+		GameBoard board = BoardFactory.EmptyBoard();
+		UUID player1 = UUID.randomUUID();
+		Token t1 = TokenFactory.Pawn(player1);
+		
+		// start at the farthest row
+		int row = 5;
+		int col = 5;
+		board.set(row, col, t1);
+
+		System.out.println("Created board");
+		System.out.println(board);
+		
+		MoveGenerator generator = new MoveGenerator();
+		generator.register(t1, new LShapedMoveAbility());
+		
+		List<GameBoard> moves = generator.generate(board, row, col);
+		
+		// check the results
+		assertTrue("There should be a total of 8 moves", moves.size() == 8);
+		
+		// print the results
+		moves.forEach(b -> System.out.println(b));
+		
+		fail("Not fully tested");
 	}
 
 	@Test

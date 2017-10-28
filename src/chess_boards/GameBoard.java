@@ -82,23 +82,28 @@ public class GameBoard {
 
 	// SETTERS
 	
-	public void set(int row, int col, Token token) {
+	public GameBoard set(int row, int col, Token token) {
 		assert(row < this.size);
 		assert(row >= 0);
 		assert(col < this.size);
 		assert(col >= 0);
 		
 		this.board[row][col] = token;
+		
+		return this;
 	}
 	
-	public void move(int fromRow, int fromCol, int toRow, int toCol) {
+	public GameBoard move(int fromRow, int fromCol, int toRow, int toCol) {
 		Token movedToken = this.get(fromRow, fromCol);
 		this.remove(fromRow, fromCol);
 		this.set(toRow, toCol, movedToken);
+		
+		return this;
 	}
 	
-	public void remove(int row, int col) {
+	public GameBoard remove(int row, int col) {
 		this.set(row, col, EMPTY_SPACE);
+		return this;
 	}
 	
 }
