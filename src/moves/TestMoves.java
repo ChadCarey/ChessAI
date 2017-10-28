@@ -162,12 +162,77 @@ public class TestMoves {
 	
 	@Test
 	public void testWestMoveAbility() {
-		fail();
+		System.out.println("Testing WestMoveAbility");
+
+		GameBoard board = BoardFactory.EmptyBoard();
+		UUID player1 = UUID.randomUUID();
+		Token t1 = TokenFactory.Pawn(player1);
+		
+		// start at the farthest row
+		int row = 4;
+		int col = board.getSize()-1;
+		board.set(row, col, t1);
+
+		System.out.println("Created board");
+		System.out.println(board);
+		
+		
+		MoveGenerator generator = new MoveGenerator();
+		// give the token the ability to move MORE than the entire length of the board 
+		generator.register(t1, new WestMoveAbility(board.getSize()+10));
+		List<GameBoard> moves = generator.generate(board, row, col);
+		System.out.println(moves.size());
+		assertTrue("Should contain 7 moves", moves.size() == 7);
+		for(GameBoard b : moves) {
+			col--;
+			Token t = b.get(row, col);
+			assertNotNull("The token found at this location should not be null", t);
+			assertTrue("This should be our token", t==t1);
+			assertTrue("This should be our token", t.equals(t1));
+		}
+		
+		// print the results
+		moves.forEach(b -> System.out.println(b));
 	}
 	
 	@Test
 	public void testNorthEastMoveAbility() {
-		fail();
+		System.out.println("Testing NorthEastMoveAbility");
+
+		GameBoard board = BoardFactory.EmptyBoard();
+		UUID player1 = UUID.randomUUID();
+		Token t1 = TokenFactory.Pawn(player1);
+		
+		// start at the farthest row
+		int row = board.getSize()-1;
+		int col = 0;
+		board.set(row, col, t1);
+
+		System.out.println("Created board");
+		System.out.println(board);
+		
+		
+		MoveGenerator generator = new MoveGenerator();
+		// give the token the ability to move MORE than the entire length of the board
+		int diagonalLength = (int) Math.sqrt( board.getSize()*board.getSize() + board.getSize()+board.getSize() );
+		System.out.println("Expected diagonal length == "+diagonalLength);
+		generator.register(t1, new NorthEastMoveAbility(diagonalLength+10));
+		List<GameBoard> moves = generator.generate(board, row, col);
+		
+		// print the results
+		moves.forEach(b -> System.out.println(b));
+		
+		System.out.println("Number of moves generated: "+moves.size());
+		assertTrue("Should contain "+(diagonalLength-1)+" moves", moves.size() == diagonalLength-1);
+		for(GameBoard b : moves) {
+			col++;
+			row--;
+			Token t = b.get(row, col);
+			assertNotNull("The token found at this location should not be null", t);
+			assertTrue("This should be our token", t==t1);
+			assertTrue("This should be our token", t.equals(t1));
+		}
+		
 	}
 	
 	@Test
