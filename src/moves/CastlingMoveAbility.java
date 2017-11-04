@@ -7,13 +7,13 @@ import java.util.UUID;
 import chess_boards.GameBoard;
 import token.Token;
 
-public class EnpasantMoveAbility implements IMoveAbility {
+public class CastlingMoveAbility implements IMoveAbility {
 
 	private String partner;
 	private UUID playerID;
 	final private static int SWAP_DISTANCE = 2; 
 	
-	public EnpasantMoveAbility(String movePartnerType, UUID playerID) {
+	public CastlingMoveAbility(String movePartnerType, UUID playerID) {
 		assert(movePartnerType != null);
 		assert(!movePartnerType.equals(""));
 		assert(playerID != null);

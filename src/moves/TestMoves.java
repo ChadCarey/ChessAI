@@ -357,7 +357,7 @@ public class TestMoves {
 	}
 	
 	@Test
-	public void testEnpasantMoveAbility() {
+	public void testCastlingMoveAbility() {
 		GameBoard board = BoardFactory.EmptyBoard();
 		UUID player1 = UUID.randomUUID();
 		Token t1 = TokenFactory.Pawn(player1);
@@ -375,7 +375,7 @@ public class TestMoves {
 		
 		// register token 1 moves
 		MoveGenerator generator = new MoveGenerator();
-		generator.register(t1, new EnpasantMoveAbility(t2.getType(), player1) );
+		generator.register(t1, new CastlingMoveAbility(t2.getType(), player1) );
 		
 		List<GameBoard> moves = generator.generate(board, player1);
 		assertTrue("Should have two moves available. Found: " + moves.size(), moves.size() == 2);
@@ -393,8 +393,6 @@ public class TestMoves {
 		assertTrue("The token found at p3 should be token 1", t1.equals(foundAtP3) );
 		assertTrue("The token found at p3 should be token 1", t1 == foundAtP3 );
 		
-		
-		
 	}
 	
 	@Test
@@ -403,7 +401,7 @@ public class TestMoves {
 	}
 	
 	@Test
-	public void testCastlingMoveAbility() {
+	public void testEnpasantMoveAbility() {
 		fail();
 	}
 	
