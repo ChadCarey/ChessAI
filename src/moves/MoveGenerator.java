@@ -66,12 +66,11 @@ public class MoveGenerator {
 			List<IMoveAbility> tokenMoveAbilities = moves.get(token);
 			if(tokenMoveAbilities != null) {
 				
-				List<GameBoard> tm = 
-						tokenMoveAbilities.parallelStream()
+				outMoves = tokenMoveAbilities.stream()
 						.map(ability -> ability.getMoves(row, col, board))
 						.flatMap(x -> x.stream() )
 						.collect(Collectors.toCollection(LinkedList::new));
-				outMoves.addAll(tm);
+				
 			}
 		}
 		return outMoves;

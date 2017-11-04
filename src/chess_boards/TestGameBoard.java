@@ -90,6 +90,25 @@ public class TestGameBoard {
 		assertFalse("Should != token", token.equals(board.get(fromRow, fromCol)));
 	}
 	
+	@Test
+	public void testSwap() {
+		GameBoard board = generateDummyBoard();
+		int row1 = 2;
+		int row2 = 4;
+		int col1 = 2;
+		int col2 = 4;
+		// save the tokens so we can later verify the swap
+		Token t1 = board.get(row1, col1);
+		Token t2 = board.get(row2, col2);
+		
+		board.swap(row1, col1, row2, col2);
+		
+		assertTrue("Should be token 1 at location 2", board.get(row2, col2) == t1);
+		assertTrue("Should be token 1 at location 2", board.get(row2, col2).equals(t1));
+		assertTrue("Should be token 2 at location 1", board.get(row1, col1) == t2);
+		assertTrue("Should be token 2 at location 1", board.get(row1, col1).equals(t2));
+	}
+	
 	// helper methods
 	private GameBoard generateDummyBoard() {
 		UUID player = UUID.randomUUID();
@@ -101,6 +120,7 @@ public class TestGameBoard {
 			}
 		}
 		return board;
+	
 	}
 	
 }

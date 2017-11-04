@@ -358,7 +358,37 @@ public class TestMoves {
 	
 	@Test
 	public void testEnpasantMoveAbility() {
-		fail();
+		GameBoard board = BoardFactory.EmptyBoard();
+		UUID player1 = UUID.randomUUID();
+		Token t1 = TokenFactory.Pawn(player1);
+		Token t2 = TokenFactory.Pawn(player1);
+		Token t3 = TokenFactory.Pawn(player1);
+		int row1 = 2;
+		int col1 = 2;
+		int row2 = 2;
+		int col2 = 4; // 2 spaces to the east
+		int row3 = 2;
+		int col3 = 0; // 2 spaces to the west
+		board.set(row1, col1, t1);
+		board.set(row2, col2, t2);
+		board.set(row3, col3, t3);
+		
+		// register token 1 moves
+		MoveGenerator generator = new MoveGenerator();
+		generator.register(t1, new EnpasantMoveAbility(t2.getType(), player1) );
+		
+		List<GameBoard> moves = generator.generate(board, player1);
+		assertTrue("Should have two moves available. Found: " + moves.size(), moves.size() == 2);
+		GameBoard posMove1 = moves.get(0);
+		Token foundAtP1 = posMove1.get(row1, col1);
+		Token foundAtP2 = posMove1.get(row2, col2);
+		Token foundAtP3 = posMove1.get(row3, col3);
+		assertTrue("Should not be the same token reference", foundAtP1 != foundAtP2 );
+		assertTrue("The token found at p1 should be token 2", t2.equals(foundAtP1) );
+		assertTrue("The token found at p1 should be token 2", t2 == foundAtP1 );
+		assertTrue("The token found at p2 should be token 1", t1.equals(foundAtP2) );
+		assertTrue("The token found at p2 should be token 1", t1 == foundAtP2 );
+		
 	}
 	
 	@Test

@@ -2,6 +2,7 @@ package chess_boards;
 
 import token.Token;
 
+// TODO: create some kind of tile abstraction to contain the token and location
 public class GameBoard {
 	private Token[][]  board;
 	private Integer size;
@@ -105,5 +106,15 @@ public class GameBoard {
 		this.set(row, col, EMPTY_SPACE);
 		return this;
 	}
+	
+	public GameBoard swap(int row1, int col1, int row2, int col2) {
+		Token t = this.get(row1, col1);
+		this.move(row2, col2, row1, col1);
+		this.set(row2, col2, t);
+		return this;
+	}
+	
+	// TODO: change this class so I can stream the board tiles
+	// public Steam<Token> stream() {}
 	
 }
