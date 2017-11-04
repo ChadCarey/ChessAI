@@ -382,12 +382,18 @@ public class TestMoves {
 		GameBoard posMove1 = moves.get(0);
 		Token foundAtP1 = posMove1.get(row1, col1);
 		Token foundAtP2 = posMove1.get(row2, col2);
-		Token foundAtP3 = posMove1.get(row3, col3);
 		assertTrue("Should not be the same token reference", foundAtP1 != foundAtP2 );
 		assertTrue("The token found at p1 should be token 2", t2.equals(foundAtP1) );
 		assertTrue("The token found at p1 should be token 2", t2 == foundAtP1 );
 		assertTrue("The token found at p2 should be token 1", t1.equals(foundAtP2) );
 		assertTrue("The token found at p2 should be token 1", t1 == foundAtP2 );
+		
+		GameBoard posMove2 = moves.get(1);
+		Token foundAtP3 = posMove2.get(row3, col3);
+		assertTrue("The token found at p3 should be token 1", t1.equals(foundAtP3) );
+		assertTrue("The token found at p3 should be token 1", t1 == foundAtP3 );
+		
+		
 		
 	}
 	
