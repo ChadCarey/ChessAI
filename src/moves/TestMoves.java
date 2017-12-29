@@ -402,7 +402,23 @@ public class TestMoves {
 	
 	@Test
 	public void testEnpasantMoveAbility() {
-		fail();
+		GameBoard board = BoardFactory.EmptyBoard();
+		UUID whiteID = UUID.randomUUID();
+		UUID blackID = UUID.randomUUID();
+		Token w1 = TokenFactory.Pawn(whiteID);
+		Token b1 = TokenFactory.Pawn(blackID);
+		
+		board.set(3, 3, w1);
+		board.set(3, 4, w1);
+		
+		MoveGenerator generator = new MoveGenerator();
+		generator.register(w1, new EnPassantMoveAbility(EnPassantMoveAbility.Direction.NORTH));
+		
+		System.out.println("\nTesting EnpasantMoveAbility");
+		List<GameBoard> bList = generator.generate(board, whiteID);
+		System.out.println(bList.size());
+		System.out.println(bList.get(0));
+		
 	}
 	
 	@Test
